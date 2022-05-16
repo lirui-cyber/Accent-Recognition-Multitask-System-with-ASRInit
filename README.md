@@ -34,7 +34,8 @@ e.g. MAIN_ROOT=/home/jicheng/espnet
 ## Data preparation
   1. All the data used in the experiment are stored in the `data` directory, in which train is used for training, valid is the verification set, 
     cv_all and test are used for testing respectively.
-  2. In order to better reproduce my experimental results, you can download the data set first, and then directly change the path in `wav.scp` in different sets in `data` directory. You can also use the `sed` command to replace the path in the wav.scp file with your path.
+  2. In order to better reproduce my experimental results, you can download the data set first, and then directly change the path in `wav.scp` in different sets in `data` directory. <br>
+  You can also use the `sed` command to replace the path in the wav.scp file with your path.
 ```
 egs: 
 origin path: /home/zhb502/raw_data/2020AESRC/American_English_Speech_Data/G00473/G00473S1002.wav
@@ -45,7 +46,7 @@ sed -i "s#/home/zhb502/raw_data/2020AESRC/#/home/jicheng/ASR-data/#g" data/train
 
 ## Accent recognition system
   1. Model file preparation
-    `run_asr_multitask_accent_recognition_16k.sh` and `run_asr_multitask_accent_recognition_8k.sh` are both used to train the multi-task model.
+    `run_asr_multitask_accent_recognition_16k.sh` and `run_asr_multitask_accent_recognition_8k.sh` are both used to train the multi-task model.<br>
     Before running, you need to first put the model file(espnet/nets/pytorch_backend/e2e_asr_transformer_multitask_accent.py) to your espnet directory.
 ```
 eg: 
@@ -53,10 +54,10 @@ eg:
 ```
   2. pretrained asr model
   In order to get better results, we first use accent data and librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. <br>
-  You can find the pretrained model in folder `pretrained-librispeech-model`.
+  You can find the pretrained model in folder `pretrained-librispeech-model`, contains 16K and 8K model. <br>
 
   3. step by step
-    The overall code is divided into four parts, including feature extraction, JSON file generation, model training and decoding. 
+    The overall code is divided into four parts, including feature extraction, JSON file generation, model training and decoding. <br>
     You can control the steps by changing the value of the step variable. 
 ```
 egs: 
@@ -76,10 +77,10 @@ egs:
 ```
 
 
-  4. In addition, in order to better reproduce and avoid you training asr system again, I uploaded two ASR models, including `pretrained_model/8k_model/model.val5.avg.best` and `pretrained_model/16k_model/model.val5.avg.best`. One is trained use 16k accent160 data, the other is 8k data.
+  4. In addition, in order to better reproduce and avoid you training asr system again, I uploaded two ASR models, including `pretrained_model/8k_model/model.val5.avg.best` and `pretrained_model/16k_model/model.val5.avg.best`.<br>
+   One is trained use 16k accent160 data, the other is 8k data.<br>
      For pretrained model, you can download from this link: https://drive.google.com/drive/folders/1nPlZD6whN1KZQknDn0C1Rtc3KylGv5LJ?usp=sharing<br>
-     
-     You can run the following two commands to directly reproduce our results
+     You can run the following two commands to directly reproduce our results.
 ```
   # 16k data
   bash run_asr_multitask_accent_recognition_16k.sh --nj 20 --steps 7 
