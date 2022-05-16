@@ -55,7 +55,7 @@ eg:
   2. pretrained asr model
   In order to get better results, we first use accent data and librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. <br>
   You can find the pretrained model in folder `pretrained-librispeech-model`, contains 16K and 8K model. <br>
-
+  The pretrained ASR model can be downloaded from the link below: https://drive.google.com/drive/folders/1SLJ54dPTk8EUCqurnl3xPSSZEhMuPP5E
   3. step by step
     The overall code is divided into four parts, including feature extraction, JSON file generation, model training and decoding. <br>
     You can control the steps by changing the value of the step variable. 
