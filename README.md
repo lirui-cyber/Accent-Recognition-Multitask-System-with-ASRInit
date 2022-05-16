@@ -52,7 +52,7 @@ eg:
   move `espnet/nets/pytorch_backend/e2e_asr_transformer_multitask_accent.py` to `/your espnet localtion/espnet/nets/pytorch_backend` 
 ```
   2. pretrained asr model
-  In order to get better results, we first use accent data and librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. \br
+  In order to get better results, we first use accent data and librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. <br>
   You can find the pretrained model in folder `pretrained-librispeech-model`.
 
   3. step by step
