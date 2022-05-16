@@ -142,7 +142,8 @@ if [ ! -z $step04 ]; then
     echo "stage 04: Make Json Labels Done"
 fi
 
-epochs=30
+epochs=120
+pretrained_model=pretrained-model/16k/model.val5.avg.best
 if [ ! -z $step05 ]; then
     epoch_stage=0
     accentWeight=0.3
@@ -188,7 +189,11 @@ if [ ! -z $step05 ]; then
         --intermediate-ctc-weight ${intermediate_ctc_weight} \
         --intermediate-ctc-layer ${intermediate_ctc_layer} \
         --train-json $data/${train_set}/${train_set}_${bpemode}_${vocab_size}.json \
-        --valid-json $data/${valid_set}/${train_set}_${bpemode}_${vocab_size}.json 
+        --valid-json $data/${valid_set}/${train_set}_${bpemode}_${vocab_size}.json \
+        --enc-init ${pretrained_model} \
+        --enc-init-mods='encoder.' \
+        --dec-init ${pretrained_model} \
+        --dec-init-mods='decoder.decoders'
 fi
 
 
