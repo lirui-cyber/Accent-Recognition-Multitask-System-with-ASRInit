@@ -14,7 +14,7 @@ cd kaldi/tools/; make; cd ../src; ./configure; make
 ```
 ### Setting up espnet environment
 ```
-git clone -b v.0.9.7 https://github.com/espnet/espnet.git
+git clone -b v.0.10.4 https://github.com/espnet/espnet.git
 cd espnet/tools/        # change to tools folder
 ln -s {kaldi_root}      # Create link to Kaldi. e.g. ln -s home/theanhtran/kaldi/
 ```
