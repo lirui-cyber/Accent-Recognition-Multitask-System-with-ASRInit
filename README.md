@@ -42,7 +42,28 @@ origin path: /home/zhb502/raw_data/2020AESRC/American_English_Speech_Data/G00473
 your path: /home/jicheng/ASR-data/American_English_Speech_Data/G00473/G00473S1002.wav
 sed -i "s#/home/zhb502/raw_data/2020AESRC/#/home/jicheng/ASR-data/#g" data/train/wav.scp
 ```
-  4. Other files can remain unchanged, you can use it directly (eg, utt2IntLabel, text, utt2spk...).
+3. Other files can remain unchanged, you can use it directly (eg, utt2IntLabel, text, utt2spk...).
+
+## Add noise to the test set 
+To test the performance in the noise background, we added musan noise to the test set.
+At the same time, different SNR(5,10,15,20) are used for noise addition. <br>
+### Generate format file
+```python
+audio_dir = "/home3/jicheng/source-data/musan/noise/"
+data_dir = "data/musan_noise/"
+audio_list = glob.glob(audio_dir+"**/*wav")
+with open(data_dir+"musan_noise_file_list.txt","w") as f:
+    for line in audio_list:
+        f.write(line+'\n')
+```
+```sh
+awk -F"[/.]" '{print $8" "$0}' data/musan_noise/musan_noise_file_list.txt > data/musan_noise/wav.scp
+awk -F"[/.]" '{print $8" "$8}' data/musan_noise/musan_noise_file_list.txt > data/musan_noise/utt2spk
+```
+### add noise
+```sh
+bash add-noise.sh --steps 2 --src-train ../data/test --noise_dir ../data/musan_noise
+```
 
 ## Accent recognition system
   1. Model file preparation
