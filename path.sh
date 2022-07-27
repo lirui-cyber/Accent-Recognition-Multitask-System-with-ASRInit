@@ -1,5 +1,5 @@
 
-MAIN_ROOT=/home3/jicheng/espnet
+MAIN_ROOT=/home3/jicheng/lirui/espnet
 KALDI_ROOT=$MAIN_ROOT/tools/kaldi
 
 export PATH=$PWD/utils/:$KALDI_ROOT/tools/openfst/bin:$PATH
