@@ -49,19 +49,12 @@ To test the performance in the noise background, we added musan noise to the tes
 At the same time, different SNR(5,10,15,20) are used for noise addition. <br>
 ### Generate format file
 ```python
-audio_dir = "/home3/jicheng/source-data/musan/noise/"
-data_dir = "data/musan_noise/"
-audio_list = glob.glob(audio_dir+"**/*wav")
-with open(data_dir+"musan_noise_file_list.txt","w") as f:
-    for line in audio_list:
-        f.write(line+'\n')
-```
-```sh
-awk -F"[/.]" '{print $8" "$0}' data/musan_noise/musan_noise_file_list.txt > data/musan_noise/wav.scp
-awk -F"[/.]" '{print $8" "$8}' data/musan_noise/musan_noise_file_list.txt > data/musan_noise/utt2spk
+# The first parameter is the path to the musan noise audio
+python deal_musan.py  /home3/jicheng/source-data/musan/noise data/musan_noise
 ```
 ### add noise
 ```sh
+cd Add-Noise
 bash add-noise.sh --steps 2 --src-train ../data/test --noise_dir ../data/musan_noise
 ```
 
