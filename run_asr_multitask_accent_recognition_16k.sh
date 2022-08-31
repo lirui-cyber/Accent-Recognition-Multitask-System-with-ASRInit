@@ -30,7 +30,7 @@ bpemode=bpe
 # feature configuration
 do_delta=false
 
-train_multitask_config=conf/espnet_transformer_multitask_with_accent.yaml
+train_multitask_config=conf/e2e_asr_transformer_multitask_accent.yaml
 lm_config=conf/espnet_lm.yaml
 decode_config=conf/espnet_decode.yaml
 preprocess_config=conf/espnet_specaug.yaml
