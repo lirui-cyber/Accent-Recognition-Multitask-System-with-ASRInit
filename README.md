@@ -7,12 +7,12 @@
   2. Espnet-0.10.4
   4. Modify the installation address of espnet in the path.sh file
 ## Installation
-### Setting up kaldi environment
+### Set up kaldi environment
 ```
 git clone -b 5.4 https://github.com/kaldi-asr/kaldi.git kaldi
 cd kaldi/tools/; make; cd ../src; ./configure; make
 ```
-### Setting up espnet environment
+### Set up espnet environment
 ```
 git clone -b v.0.10.4 https://github.com/espnet/espnet.git
 cd espnet/tools/        # change to tools folder
@@ -26,7 +26,7 @@ make TH_VERSION=1.8.0 CUDA_VERSION=10.2     # Install Pytorch and CUDA
 conda install torchvision==0.9.0 torchaudio==0.8.0 -c pytorch
 ```
 ### Set your own execution environment
-Open ISCAP_Age_Estimation/path.sh file, change $MAIN_ROOT$ to your espnet directory, 
+Open path.sh file, change $MAIN_ROOT$ to your espnet directory, 
 ```
 e.g. MAIN_ROOT=/home/jicheng/espnet
 ```
@@ -67,9 +67,12 @@ eg:
   move `espnet/nets/pytorch_backend/e2e_asr_transformer_multitask_accent.py` to ` your espnet localtion/espnet/nets/pytorch_backend` 
 ```
   2. pretrained asr model
-  In order to get better results, we first use accent data and librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. <br>
+  In order to get better results, we first use librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. <br>
   You can train yourself to train the ASR model using the following script:
   ```
+  # You can also use the `sed` command to replace the path in the wav.scp file with your path
+  sed -i "s#/data/users/zpz505/LibriSpeech#/data/LibriSpeech#g" data-librispeech/train_960/wav.scp
+
   bash run_librispeech_asr.sh  --nj 20 --steps 1-8
   ```
   You can also find the pretrained model in folder `pretrained-librispeech-model`, contains 16K and 8K model. <br>
