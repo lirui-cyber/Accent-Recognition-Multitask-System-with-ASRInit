@@ -52,7 +52,7 @@ At the same time, different SNR(5,10,15,20) are used for noise addition. <br>
 # The first parameter is the path to the musan noise audio
 python deal_musan.py  /home3/jicheng/source-data/musan/noise data/musan_noise
 ```
-### add noise
+### Add noise
 ```sh
 cd Add-Noise
 bash add-noise.sh --steps 2 --src-train ../data/test --noise_dir ../data/musan_noise
@@ -73,7 +73,7 @@ eg:
   bash run_librispeech_asr.sh  --nj 20 --steps 1-8
   ```
   You can also find the pretrained model in folder `pretrained-librispeech-model`, contains 16K and 8K model. <br>
-  The pretrained ASR model can be downloaded from the link below: https://drive.google.com/drive/folders/1SLJ54dPTk8EUCqurnl3xPSSZEhMuPP5E
+  The pretrained ASR model can be downloaded from the link below: https://drive.google.com/drive/folders/1SLJ54dPTk8EUCqurnl3xPSSZEhMuPP5E <br>
   3. step by step
     The overall code is divided into four parts, including feature extraction, JSON file generation, model training and decoding. <br>
     You can control the steps by changing the value of the step variable. 
