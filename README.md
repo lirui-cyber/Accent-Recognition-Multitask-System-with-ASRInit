@@ -61,16 +61,18 @@ bash add-noise.sh --steps 2 --src-train ../data/test --noise_dir ../data/musan_n
 ## Accent recognition system
   1. Model file preparation
     `run_asr_multitask_accent_recognition_16k.sh` and `run_asr_multitask_accent_recognition_8k.sh` are both used to train the multi-task model.<br>
-    Before running, you need to first put the model file(espnet/nets/pytorch_backend/e2e_asr_transformer_multitask_accent.py) to your espnet directory.
+    Before running, you need to first move the corresponding files of espnet to the corresponding directory of your espnet directory. 
 ```
 eg: 
-  move `scripts/asr_train_multitask_accent.py` to `/your espnet localtion/espnet/asr/pytorch_backend/`
-  move `scripts/e2e_asr_transformer_multitask_accent.py` to `/your espnet localtion/espnet/nets/pytorch_backend/` 
-  move `scripts/asr_recog_for_multitask_accent.py` to `your espnet location/espnet/bin/`
+  move `espnet/nets/pytorch_backend/e2e_asr_transformer_multitask_accent.py` to ` your espnet localtion/espnet/nets/pytorch_backend` 
 ```
   2. pretrained asr model
   In order to get better results, we first use accent data and librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. <br>
-  You can find the pretrained model in folder `pretrained-librispeech-model`, contains 16K and 8K model. <br>
+  You can train yourself to train the ASR model using the following script:
+  ```
+  bash run_librispeech_asr.sh  --nj 20 --steps 1-8
+  ```
+  You can also find the pretrained model in folder `pretrained-librispeech-model`, contains 16K and 8K model. <br>
   The pretrained ASR model can be downloaded from the link below: https://drive.google.com/drive/folders/1SLJ54dPTk8EUCqurnl3xPSSZEhMuPP5E
   3. step by step
     The overall code is divided into four parts, including feature extraction, JSON file generation, model training and decoding. <br>

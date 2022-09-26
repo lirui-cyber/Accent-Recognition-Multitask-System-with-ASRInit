@@ -6,9 +6,9 @@
 . ./path.sh || exit 1;
 . ./cmd.sh || exit 1;
 
-cuda_cmd="slurm.pl --quiet --exclude=node0[4-9]"
-decode_cmd="slurm.pl --quiet --exclude=node0[3-5]"
-cmd="slurm.pl --quiet --exclude=node0[3-5]"
+cuda_cmd="run.pl"
+decode_cmd="run.pl"
+cmd="run.pl"
 # general configuration
 backend=pytorch
 steps=1
@@ -123,6 +123,7 @@ if [ ! -z $step04 ]; then
 fi
 
 lmexpdir=${exp}/${train_set}_rmmlm_${bpemode}
+if false;then
 # train rnnlm 
 if [ ! -z $step06 ]; then
     lmdatadir=$exp/local/lm_${train_set}_${bpemode}
@@ -145,7 +146,7 @@ if [ ! -z $step06 ]; then
         --resume ${lm_resume} \
         --dict ${dict}
 fi
-
+fi
 if [ ! -z $step07 ]; then
     train_set=${train_set}
     transformer_lr=10
@@ -189,50 +190,10 @@ if [ ! -z $step07 ]; then
                 --valid-json $data/${valid_set}/${train_set}_${bpemode}_${vocab_size}.json
 fi
 
-if [ ! -z $step08 ]; then    
-    train_set=${train_set}
-    transformer_lr=10
-    batch_size=32
-    epochs=120
-    expname=${train_set}_conformer_12enc_6dec_withSpecAug_lr_${transformer_lr}_batch_size_${batch_size}_${backend}
-    expname=${train_set}_conformer_12enc_6dec_noSpecAug_lr_${transformer_lr}_batch_size_${batch_size}_${backend}
-    expname=test
-    expdir=$exp/${expname}    
-    epoch_stage=0
-    [ -d $expdir ] || mkdir -p ${expdir}    
-    echo "stage 8: Network Training"    
-    ngpu=1    
-    if  [ ${epoch_stage} -gt 0 ]; then
-        echo "stage 6: Resume network from epoch ${epoch_stage}"
-        resume=${exp}/${expname}/results/snapshot.ep.${epoch_stage}
-    fi
-    train_config=conf/train_pytorch_conformer.yaml
-    train_config=conf/train_pytorch_transformer_withUttName.yaml
-    preprocess_config=conf/specaug.yaml
-#                --preprocess-conf ${preprocess_config} \
-    ${cuda_cmd} --gpu $ngpu ${expdir}/train.log \
-         asr_train_withUttName.py \
-                --config ${train_config} \
-                --ngpu $ngpu \
-                --backend ${backend} \
-                --outdir ${expdir}/results \
-                --tensorboard-dir tensorboard/${expname} \
-                --debugmode ${debugmode} \
-                --dict ${dict} \
-                --debugdir ${expdir} \
-                --minibatches ${N} \
-                --verbose ${verbose} \
-                --resume ${resume} \
-                --transformer-lr ${transformer_lr} \
-                --batch-size ${batch_size} \
-                --epochs ${epochs} \
-                --train-json $data/${valid_set}/${train_set}_${bpemode}_${vocab_size}.json \
-                --valid-json $data/${valid_set}/${train_set}_${bpemode}_${vocab_size}.json
-fi
 use_valbest_average=true
 max_epoch=120
 
-if [ ! -z $step16 ]; then
+if [ ! -z $step08 ]; then
     echo "stage 3: Decoding"
     # train_config=conf/train_pytorch_transformer.yaml
     train_config=conf/train_pytorch_conformer.yaml
@@ -294,7 +255,7 @@ if [ ! -z $step16 ]; then
     echo "Finished"
 fi
 use_valbest_average=false
-if [ ! -z $step17 ]; then
+if [ ! -z $step09 ]; then
     echo "stage 3: Decoding"    
     train_config=conf/train_pytorch_conformer.yaml
     nj=100
