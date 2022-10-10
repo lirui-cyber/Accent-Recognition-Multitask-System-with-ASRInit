@@ -98,15 +98,12 @@ egs:
 ```
 
 
-  4. In addition, in order to better reproduce and avoid you training asr system again, I uploaded two ASR models, including `pretrained_model/8k_model/model.val5.avg.best` and `pretrained_model/16k_model/model.val5.avg.best`.<br>
-   One is trained use 16k accent160 data, the other is 8k data.<br>
+  4. In addition, in order to better reproduce and avoid you training asr system again, I uploaded an ASR model trained use 16k accent160 data.<br>
      For pretrained model, you can download from this link: https://drive.google.com/file/d/1mP81esvRycnzqpvxpm7HjNPHT8SFfdig/view?usp=sharing <br>
      You can run the following two commands to directly reproduce our results.
 ```
   # 16k data
   bash run_asr_multitask_accent_recognition_16k.sh --nj 20 --steps 7 
-  # 8k data
-  bash run_asr_multitask_accent_recognition_8k.sh --nj 20 --steps 7
 ```
 
 ## notice
