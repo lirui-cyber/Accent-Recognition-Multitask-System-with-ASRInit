@@ -100,7 +100,7 @@ egs:
 
   4. In addition, in order to better reproduce and avoid you training asr system again, I uploaded two ASR models, including `pretrained_model/8k_model/model.val5.avg.best` and `pretrained_model/16k_model/model.val5.avg.best`.<br>
    One is trained use 16k accent160 data, the other is 8k data.<br>
-     For pretrained model, you can download from this link: https://drive.google.com/drive/folders/1nPlZD6whN1KZQknDn0C1Rtc3KylGv5LJ?usp=sharing<br>
+     For pretrained model, you can download from this link: https://drive.google.com/file/d/1mP81esvRycnzqpvxpm7HjNPHT8SFfdig/view?usp=sharing <br>
      You can run the following two commands to directly reproduce our results.
 ```
   # 16k data
