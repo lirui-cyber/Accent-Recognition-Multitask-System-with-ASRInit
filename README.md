@@ -30,6 +30,25 @@ Open path.sh file, change $MAIN_ROOT$ to your espnet directory,
 ```
 e.g. MAIN_ROOT=/home/jicheng/espnet
 ```
+### Set up the environment for extracting pre-trained features
+- install librosa, kaldiio
+```
+pip install librosa
+pip install kaldiio 
+```
+- install fairseq
+```
+git clone -b v0.12.2 https://github.com/facebookresearch/fairseq.git  tool/fairseq
+pip install -e tool/fairseq
+```
+- install s3prl
+```
+git clone -b v0.3.4 https://github.com/s3prl/s3prl.git tool/s3prl
+sed -i '60d' tool/s3prl/setup.py
+pip install -e tool/s3prl/
+mv tool/expert.py tool/s3prl/s3prl/upstream/wav2vec2/
+```
+
 # Instructions for use
 ## Data preparation
   1. All the data used in the experiment are stored in the `data` directory, in which train is used for training, valid is the verification set, 
