@@ -64,7 +64,11 @@ bash add-noise.sh --steps 2 --src-train ../data/test --noise_dir ../data/musan_n
     Before running, you need to first move the corresponding files of espnet to the corresponding directory of your espnet directory. 
 ```
 eg: 
-  move `espnet/nets/pytorch_backend/e2e_asr_transformer_multitask_accent.py` to ` your espnet localtion/espnet/nets/pytorch_backend` 
+  move `espnet/asr/pytorch_backend/asr_train_multitask_accent.py` to ` your espnet localtion/espnet/asr/pytorch_backend/` 
+  move `espnet/bin/*` to ` your espnet localtion/espnet/bin/` 
+  move `espnet/nets/pytorch_backend/*` to ` your espnet localtion/espnet/nets/pytorch_backend/` 
+  move `espnet/utils/*` to ` your espnet localtion/espnet/utils/` 
+
 ```
   2. pretrained asr model
   In order to get better results, we first use librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. <br>
