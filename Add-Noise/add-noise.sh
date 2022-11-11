@@ -43,28 +43,13 @@ if [ ! -z "$steps" ]; then
   done
 fi
 
-# add noise
-rats_data=/home3/andrew219/python_scripts/extract_rats_noise/rats_channels/
-
-if [ ! -z $step01 ]; then 
-  mkdir data/rats_channels_AEH_noise || exit 1;
-  mkdir data/rats_channels_BCDFG_noise || exit 1;
-  ls $rats_data/channel_{A,E,H}/*.wav > data/rats_channels_AEH_noise/rats_channels_AEH_noise_file_list.txt
-  ls $rats_data/channel_{B,C,D,F,G}/*.wav > data/rats_channels_BCDFG_noise/rats_channels_BCDFG_noise_file_list.txt
-
-  for x in rats_channels_AEH_noise rats_channels_BCDFG_noise;do
-    cat $x/${x}_noise_file_list.txt | awk '{ split($0, arr, "/"); c=arr[7]; l=length(arr[8]); name=substr(arr[8], 0, l-4); print name " "name}' > $x/utt2spk
-    cat $x/${x}_noise_file_list.txt | awk '{ split($0, arr, "/"); c=arr[7]; l=length(arr[8]); name=substr(arr[8], 0, l-4); print name " "$0}' > $x/wav.scp
-    utils/fix_data_dir.sh cat $x/
-  done
-fi
 
 if [ ! -f $src_train/reco2dur ]; then
     utils/data/get_reco2dur.sh --nj $nj  --cmd "$cmd" $src_train || exit 1;
 fi
-#if [ ! -f $noise_dir/reco2dur ]; then
-#    utils/data/get_reco2dur.sh --nj $nj  --cmd "$cmd" $noise_dir || exit 1;
-#fi
+if [ ! -f $noise_dir/reco2dur ]; then
+    utils/data/get_reco2dur.sh --nj $nj  --cmd "$cmd" $noise_dir || exit 1;
+fi
 
 if [ ! -z $step02 ]; then
   for noise_bg_snrs in 5 10 15 20;do
