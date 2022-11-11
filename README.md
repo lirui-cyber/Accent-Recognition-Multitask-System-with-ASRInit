@@ -70,18 +70,7 @@ eg:
   move `espnet/utils/*` to ` your espnet localtion/espnet/utils/` 
 
 ```
-  2. pretrained asr model
-  In order to get better results, we first use librispeech data set(960 hours) to train an ASR system, and then use it to initialize our multi task system. <br>
-  You can train yourself to train the ASR model using the following script:
-  ```
-  # You can also use the `sed` command to replace the path in the wav.scp file with your path
-  sed -i "s#/data/users/zpz505/LibriSpeech#/data/LibriSpeech#g" data-librispeech/train_960/wav.scp
-
-  bash run_librispeech_asr.sh  --nj 20 --steps 1-8
-  ```
-  You can also find the pretrained model in folder `pretrained-librispeech-model`, contains 16K and 8K model. <br>
-  The pretrained ASR model can be downloaded from the link below: https://drive.google.com/drive/folders/1SLJ54dPTk8EUCqurnl3xPSSZEhMuPP5E <br>
-  3. step by step
+  2. step by step
     The overall code is divided into four parts, including feature extraction, JSON file generation, model training and decoding. <br>
     You can control the steps by changing the value of the step variable. 
 ```
@@ -110,17 +99,4 @@ egs:
   bash run_asr_multitask_accent_recognition_16k.sh --nj 20 --steps 7 
 ```
 
-## notice
-```
-  All scripts have one inputs: steps
-  steps: Control execution parameters
-```  
 
-## Add codec (simulation narrow-band data)
-  In reality, it is hard to obtain sufficient domain specific real telephony data to train acoustic models due to data privacy consideration. So we employ diversified audio codecs simulation based data augmentation method to train telephony speech recognition system.<br>
-  In this study, we use AESRC accent data as wide-band data, we first down-sample the 16 kHz accent data to the 8 kH. For simulate narrow-band data, we select randomly from the full list of codecs, and using FFMPEG tools convert it to narrow-band data.<br>
-  For specific implementation, you can refer to `add-codec/add-codec.sh` script, but before you run it, you must change the value `"/home4/hhx502/w2019/ffmpeg_source/bin/ffmpeg"` in add-codec/scripts/add-codec-with-ffmpeg.pl to you ffmpeg path. Then you should modify the value of `data_set` and `source_dir` variable in the `add-codec/add-codec.sh` script. After the first two steps, you can run it directly<br>
-```
-egs:
-  bash add-codec.sh
-```
