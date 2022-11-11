@@ -100,14 +100,7 @@ egs:
   bash run_asr_multitask_accent_recognition_16k.sh --nj 20 --steps 4
   bash run_asr_multitask_accent_recognition_16k.sh --nj 20 --steps 5
   bash run_asr_multitask_accent_recognition_16k.sh --nj 20 --steps 6
-  ### for 8k data
-  bash run_asr_multitask_accent_recognition_8k.sh --nj 20 --steps 1
-  bash run_asr_multitask_accent_recognition_8k.sh --nj 20 --steps 2
-  bash run_asr_multitask_accent_recognition_8k.sh --nj 20 --steps 3
-  bash run_asr_multitask_accent_recognition_8k.sh --nj 20 --steps 4
-  bash run_asr_multitask_accent_recognition_8k.sh --nj 20 --steps 5
-  bash run_asr_multitask_accent_recognition_8k.sh --nj 20 --steps 6
-```
+  ```
 
 
   4. In addition, in order to better reproduce and avoid you training asr system again, I uploaded an ASR model trained use 16k accent160 data.<br>
