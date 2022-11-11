@@ -7,13 +7,13 @@
 . ./cmd.sh || exit 1;
 
 
-# cuda_cmd="slurm.pl --quiet --exclude=node0[1,3-8]"
-# decode_cmd="slurm.pl --quiet --exclude=node0[1-4]"
-# cmd="slurm.pl --quiet --exclude=node0[1,8,3,4]"
+cuda_cmd="slurm.pl --quiet --exclude=node0[3-8]"
+decode_cmd="slurm.pl --quiet --exclude=node0[3-8]"
+cmd="slurm.pl --quiet --exclude=node0[3-8]"
 
-cuda_cmd="run.pl"
-decode_cmd="run.pl"
-cmd="run.pl"
+#cuda_cmd="run.pl"
+#decode_cmd="run.pl"
+#cmd="run.pl"
 # general configuration
 backend=pytorch
 steps=1
@@ -53,6 +53,10 @@ batch_size=32
 recog_mode="accent"
 use_valbest_average=true
 
+#Select which pre-trained model features to extract, [wavlm | wav2vec2(xlsr53)]
+model_type=wavlm
+feat_layer=16 # which layer to extract
+
 # exp tag
 tag="base" # tag for managing experiments.
 
@@ -83,25 +87,26 @@ fi
 
 data=data
 exp=exp
+dump_features=data-${model_type}
 
 train_set="train"
+valid_set="cv_all"
 recog_set="cv_all test"
-valid_set="valid"
 
 
 if [ ! -z $step01 ]; then
-   echo "extracting filter-bank features and cmvn for 16k data"
-   for i in $train_set $valid_set $recog_set;do
+   echo "extracting pretrain features and cmvn for 16k data"
+   for i in $train_set $recog_set;do
       utils/fix_data_dir.sh $data/$i
-      steps/make_fbank_pitch.sh --cmd "$cmd" --nj $nj --write_utt2num_frames true \
-          $data/$i $data/$i/feats/log $data/$i/feats/ark
-      utils/fix_data_dir.sh $data/$i
+      cp -r $data $dump_features
+      ${cuda_cmd} --gpu 1 extract_feature.log python extract_feature.py $dump_features $feat_layer
+      ./utils/fix_data_dir.sh $dump_features/$i
    done
 
-   compute-cmvn-stats scp:$data/${train_set}/feats.scp $data/${train_set}/cmvn.ark
-   echo "step01 Extracting filter-bank features and cmvn Done"
+   compute-cmvn-stats scp:$dump_features/${train_set}/feats.scp $dump_features/${train_set}/cmvn.ark
+   echo "step01 Extracting pretrain features and cmvn Done"
 fi
-
+data=$dump_features
 if [ ! -z $step02 ]; then
    echo "generate label file and dump features for track2:E2E"
 
@@ -110,7 +115,7 @@ if [ ! -z $step02 ]; then
           $data/$x/feats.scp $data/${train_set}/cmvn.ark $data/$x/dump/log $data/$x/dump
    done
 
-   for x in $train_set $valid_set $recog_set;do 
+   for x in $train_set $recog_set;do 
        dump.sh --cmd "$cmd" --nj $nj  --do_delta false \
           $data/$x/feats.scp $data/${train_set}/cmvn.ark $data/$x/dump_${train_set}/log $data/$x/dump_${train_set}
    done
